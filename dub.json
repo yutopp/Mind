@@ -1,0 +1,10 @@
+{
+	"name": "mind",
+	"description": "parser generator.",
+	"copyright": "Copyright yutopp 2015 - .",
+	"authors": ["yutopp"],
+    "license": "Boost",
+	"targetType": "library",
+	"dependencies": {
+	}
+}
