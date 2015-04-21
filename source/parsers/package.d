@@ -8,5 +8,6 @@
 module parsers;
 
 public import parsers.charactor;
+public import parsers.string;
 public import parsers.nonterminal;
 public import parsers.aux;

@@ -13,6 +13,10 @@ bool passTest(alias V, T)(ParseResult!(T) actual) {
     return actual == ParseResult!(T)(true, V);
 }
 
+bool passTest(T, U)(ParseResult!(T) actual, U expect_val) {
+    return actual == ParseResult!(T)(true, expect_val);
+}
+
 bool failTest(T)(ParseResult!(T) actual) {
     return !actual.successful;
 }

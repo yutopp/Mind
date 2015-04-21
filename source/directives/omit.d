@@ -9,17 +9,19 @@
 module directives.omit;
 
 import std.range : isInputRange;
-import utility;
+import parsers.parser, utility;
 
 
 // ================================================================================
 //
 // ================================================================================
-template omit(alias Parser)
+template omit(alias ParserGen)
 {
-    struct omit
+    alias Parser = toParser!ParserGen;
+
+    struct omitType
     {
-        alias ValueType = Unused;  // do not get Attribute
+        mixin parser!Unused;    // do not get Attribute
 
         static bool parse(R, Context, Attr)
             (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
@@ -27,6 +29,11 @@ template omit(alias Parser)
             auto unused = Unused();   // TODO: fix
             return Parser.parse!(R, Context, ValueType)(src, ctx, unused);
         }
+    }
+
+    auto omit()
+    {
+        return immutable omitType();
     }
 }
 

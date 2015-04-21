@@ -11,7 +11,7 @@ module operators.sequence;
 import std.traits, std.range;
 import std.typecons, std.typetuple;
 
-import utility;
+import parsers.parser, utility;
 
 
 // ================================================================================
@@ -23,9 +23,9 @@ template sequence(Parsers...) if (Parsers.length > 0)
     alias Index = tape.Index;
     alias Actions = tape.Actions;
 
-    struct sequence
+    struct sequenceType
     {
-        alias ValueType = tape.ValueType;
+        mixin parser!(tape.ValueType);
 
         static bool parse(R, Context, Attr)
             (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
@@ -33,7 +33,7 @@ template sequence(Parsers...) if (Parsers.length > 0)
             auto before = src.save;
             scope(failure) src = before;
 
-            static if ( __traits(compiles, tape.SeqTupleExpandable) ) {
+            static if ( !is(Attr == Unused) && __traits(compiles, tape.SeqTupleExpandable) ) {
                 // attr is Tuple!
                 foreach(i, Parser; Parsers) {
                     if ( !seq_func!(Parsers[i], Actions[i])(src, ctx, attr.tupleof[Index[i]]) ) {
@@ -54,6 +54,11 @@ template sequence(Parsers...) if (Parsers.length > 0)
 
             return true;
         }
+    }
+
+    auto sequence()
+    {
+        return sequenceType();
     }
 }
 

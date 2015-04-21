@@ -11,15 +11,16 @@ module operators.alternative;
 import std.typecons, std.typetuple;
 import std.range;
 
-import utility;
+import parsers.parser, utility;
 import variant.dynamicvariant;
 
 
 // ================================================================================
 //
 // ================================================================================
-template alternative(Parsers...)
+template alternative(ParsersGen...)
 {
+    alias Parsers = toParser!ParsersGen;
     static assert(Parsers.length > 0);
 
     alias ValueTypeTuple = staticMap!(GetValueType, Parsers);
@@ -58,19 +59,19 @@ template alternative(Parsers...)
         }
     }
 
-    struct alternative
+    struct alternativeType
     {
         static if ( mode == Mode.unused ) {
-            alias ValueType = Unused;
+            mixin parser!Unused;
 
         } else static if ( mode == Mode.optional ) {
-            alias ValueType = Nullable!(UniqueValueTypeTuple[0]);
+            mixin parser!(Nullable!(UniqueValueTypeTuple[0]));
 
         } else static if ( mode == Mode.unique ) {
-            alias ValueType = UniqueValueTypeTuple[0];
+            mixin parser!(UniqueValueTypeTuple[0]);
 
         } else static if ( mode == Mode.variant ) {
-            alias ValueType = DynamicVariant!UniqueValueTypeTuple;
+            mixin parser!(DynamicVariant!UniqueValueTypeTuple);
         }
 
         //pragma(msg, ValueType);
@@ -108,6 +109,11 @@ template alternative(Parsers...)
             return false;   // not matched
         }
     }
+
+    auto alternative()
+    {
+        return alternativeType();
+    }
 }
 
 private enum Mode
@@ -121,7 +127,7 @@ private enum Mode
 
 unittest
 {
-    import std.stdio;
+    //import std.stdio;
     import test;
     import parsers.charactor, parsers.aux;
     import operators.repeat;

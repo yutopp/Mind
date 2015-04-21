@@ -10,7 +10,7 @@ module parsers.charactor;
 
 import std.typecons : staticMap;
 import std.range;
-import utility;
+import parsers.parser, utility;
 
 
 // ================================================================================
@@ -18,8 +18,10 @@ import utility;
 // ================================================================================
 template ch(alias Char, T = typeof(Char))
 {
-    struct ch {
-        alias ValueType = T;
+    struct chType
+    {
+        // TODO: support utf-8
+        mixin parser!T;
 
         static bool parse(R, Context, Attr)
             (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
@@ -34,6 +36,11 @@ template ch(alias Char, T = typeof(Char))
                 return false;
             }
         }
+    }
+
+    auto ch()
+    {
+        return chType();
     }
 }
 
@@ -60,9 +67,9 @@ template charRange(alias Begin, alias End)
         alias charRange = ch!Begin;     // or ch!End
 
     } else static if ( Begin < End ) {
-        struct charRange
+        struct charRangeType
         {
-            alias ValueType = typeof(Begin); // or typeof(End)
+            mixin parser!(typeof(Begin));   // or typeof(End)
 
             static bool parse(R, Context, Attr)
                 (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
@@ -77,6 +84,11 @@ template charRange(alias Begin, alias End)
                     return false;
                 }
             }
+        }
+
+        auto charRange()
+        {
+            return charRangeType();
         }
 
     } else {
@@ -119,7 +131,7 @@ template charRangeSeq(Ranges...)
 
     alias CharSeq = staticMap!(convertToChars, Ranges);
 
-    //
+    // body of this parser
     alias charRangeSeq = alternative!CharSeq;
 }
 

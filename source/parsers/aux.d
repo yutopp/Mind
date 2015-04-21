@@ -10,7 +10,7 @@ module parsers.aux;
 
 import std.typecons : staticMap;
 import std.range;
-import utility;
+import parsers.parser, utility;
 
 
 // ================================================================================
@@ -18,8 +18,9 @@ import utility;
 // ================================================================================
 template attr(alias Val)
 {
-    struct attr {
-        alias ValueType = typeof(Val);
+    struct attrType
+    {
+        mixin parser!(typeof(Val));
 
         static bool parse(R, Context, Attr)
             (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
@@ -29,20 +30,10 @@ template attr(alias Val)
             return true;
         }
     }
-}
 
-
-// ================================================================================
-//
-// ================================================================================
-struct eps
-{
-    alias ValueType = Unused;
-
-    static bool parse(R, Context, Attr)
-        (ref R, Context, ref Attr) if ( isInputRange!R )
+    auto attr()
     {
-        return true;
+        return attrType();
     }
 }
 
@@ -50,14 +41,38 @@ struct eps
 // ================================================================================
 //
 // ================================================================================
-struct eoi {
-    import std.range;
+private struct epsType
+{
+    mixin parser!Unused;
 
-    alias ValueType = Unused;
+    static bool parse(R, Context, Attr)
+        (ref R, ref Context, ref Attr) if ( isInputRange!R )
+    {
+        return true;
+    }
+}
+
+auto eps()
+{
+    return epsType();
+}
+
+
+// ================================================================================
+//
+// ================================================================================
+private struct eoiType
+{
+    mixin parser!Unused;
 
     static bool parse(R, Context, Attr)
         (ref R src, ref Context, ref Attr) if ( isInputRange!R )
     {
         return src.empty;
     }
+}
+
+auto eoi()
+{
+    return eoiType();
 }

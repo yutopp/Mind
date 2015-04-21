@@ -8,6 +8,7 @@
 
 module operators.option;
 
+import parsers.parser, utility;
 import operators.alternative;
 import parsers.aux : eps;
 
@@ -15,8 +16,10 @@ import parsers.aux : eps;
 // ================================================================================
 //
 // ================================================================================
-template option(alias Parser)
+template option(alias ParserGen)
 {
+    alias Parser = toParser!ParserGen;
+
     alias option = alternative!(Parser, eps);
 }
 

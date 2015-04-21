@@ -22,7 +22,8 @@ template MoveTo(string src, string to) {
 }
 
 
-template GetValueType(alias Parser) {
+template GetValueType(alias Parser)
+{
     alias GetValueType = Parser.ValueType;
 }
 
@@ -60,4 +61,30 @@ template parseIntoContainer(alias Parser, R, Context, Attr) {
         return b;
     }
     // }
+}
+
+template toParserUnit(alias ParserGen)
+{
+    import std.traits;
+    import std.typecons : Unqual;
+
+    static if ( isCallable!ParserGen ) {
+        // all parsers in Mind is aliased as function
+        // , so extract ParserType from the function signature.
+        alias toParserUnit = Unqual!(ReturnType!ParserGen);
+
+    } else static if ( __traits(compiles, typeof(ParserGen)) ) {
+        alias toParserUnit = Unqual!(typeof(ParserGen));
+
+    } else {
+        alias toParserUnit = Unqual!ParserGen;
+    }
+}
+alias toParser = toParserUnit;
+
+template toParser(ParserGen...)
+{
+    import std.typetuple : staticMap;
+
+    alias toParser = staticMap!(toParserUnit, ParserGen);
 }

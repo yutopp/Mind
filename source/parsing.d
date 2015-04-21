@@ -9,20 +9,24 @@
 import utility;
 
 
-struct ParseResult(Attr) {
+struct ParseResult(Attr)
+{
     bool successful;
     Attr attr;
 }
 
 //
-auto parse(alias Parser, R)(R input) {
+auto parse(alias Parser, R)(R input)
+{
+    //pragma(msg, typeof(Parser));
     alias Attr = GetValueType!Parser;
 
     return parseImpl!(Parser, Attr)(input);
 }
 
 //
-auto onlyParse(alias Parser, R)(R input) {
+auto onlyParse(alias Parser, R)(R input)
+{
     alias Attr = Unused;
 
     return parseImpl!(Parser, Attr)(input);

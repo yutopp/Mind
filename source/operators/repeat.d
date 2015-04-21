@@ -9,17 +9,19 @@
 module operators.repeat;
 
 import std.range;
-import utility;
+import parsers.parser, utility;
 
 
 // ================================================================================
 //
 // ================================================================================
-template repeatMore0(alias Parser)
+template repeatMore0(alias ParserGen)
 {
-    struct repeatMore0
+    alias Parser = toParser!ParserGen;
+
+    struct repeatMore0Type
     {
-        alias ValueType = GetValueType!(Parser)[];
+        mixin parser!(GetValueType!(Parser)[]);
 
         static bool parse(R, Context, Attr)
             (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
@@ -27,6 +29,11 @@ template repeatMore0(alias Parser)
             while( parseIntoContainer!(Parser)(src, ctx, attr) ) {}
             return true;
         }
+    }
+
+    auto repeatMore0()
+    {
+        return immutable repeatMore0Type();
     }
 }
 
@@ -50,11 +57,13 @@ unittest {
 // ================================================================================
 //
 // ================================================================================
-template repeatMore1(alias Parser)
+template repeatMore1(alias ParserGen)
 {
-    struct repeatMore1
+    alias Parser = toParser!ParserGen;
+
+    struct repeatMore1Type
     {
-        alias ValueType = GetValueType!(Parser)[];
+        mixin parser!(GetValueType!(Parser)[]);
 
         static bool parse(R, Context, Attr)
             (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
@@ -64,6 +73,11 @@ template repeatMore1(alias Parser)
             while( parseIntoContainer!(Parser)(src, ctx, attr) ) {}
             return true;
         }
+    }
+
+    auto repeatMore1()
+    {
+        return immutable repeatMore1Type();
     }
 }
 

@@ -9,7 +9,7 @@
 module parsers.nonterminal;
 
 import std.range : isInputRange;
-import utility;
+import parsers.parser, utility;
 
 
 // ================================================================================
@@ -17,9 +17,9 @@ import utility;
 // ================================================================================
 template rule(alias Parser)
 {
-    struct rule
+    struct ruleType
     {
-        alias ValueType = GetValueType!Parser;
+        mixin parser!(GetValueType!Parser);
 
         static bool parse(R, Context, Attr)
             (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
@@ -28,5 +28,10 @@ template rule(alias Parser)
 
             return b;
         }
+    }
+
+    auto rule()
+    {
+        return ruleType();
     }
 }
