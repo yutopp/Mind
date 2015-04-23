@@ -6,12 +6,12 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module parsers.charactor;
+module mind.parsers.charactor;
 
 import std.typecons : staticMap;
 import std.range;
 import std.traits : ForeachType, Unqual;
-import parsers.parser, utility;
+import mind.parsers.parser, mind.utility;
 
 
 // ================================================================================
@@ -108,7 +108,7 @@ template charRangeSeq(C, Ranges...)
 {
     import std.traits;
     import std.typecons : Tuple;
-    import operators.alternative;
+    import mind.operators.alternative;
 
     template convertToParser(alias R)
     {
@@ -142,7 +142,7 @@ template charRangeSeq(C, Ranges...)
 
 unittest
 {
-    import test;
+    import mind.test;
     import std.typecons : tuple;
 
     {
@@ -174,8 +174,8 @@ unittest
 // ================================================================================
 private template CharRangeGrammar(C = char)
 {
-    import parsers;
-    import directives;
+    import mind.parsers;
+    import mind.directives;
 
     struct Grammar
     {
@@ -193,9 +193,9 @@ private template CharRangeGrammar(C = char)
 private:
     unittest
     {
-        import test;
+        import mind.test;
         import std.typecons : Tuple, tuple;
-        import variant.dynamicvariant;
+        import mind.variant.dynamicvariant;
 
         {
             enum input = "a-z";
@@ -239,9 +239,9 @@ private:
 
 unittest
 {
-    import test;
+    import mind.test;
     import std.typecons : Tuple, tuple;
-    import variant.dynamicvariant;
+    import mind.variant.dynamicvariant;
 
     {
         enum input = "A-Za-z_";
@@ -264,9 +264,9 @@ template chRange(alias Str, C = Unqual!(ForeachType!(typeof(Str))))
 {
     import std.typecons : Tuple;
     import std.typetuple;
-    import parsing;
-    import operators.alternative;
-    import variant.dynamicvariant;
+    import mind.parsing;
+    import mind.operators.alternative;
+    import mind.variant.dynamicvariant;
 
     template toT(alias V)
     {
@@ -304,7 +304,7 @@ template chRange(alias Str, C = Unqual!(ForeachType!(typeof(Str))))
 
 unittest
 {
-    import test;
+    import mind.test;
 
     {
         enum input = "b";
@@ -405,7 +405,7 @@ auto any(C)()
 
 unittest
 {
-    import test;
+    import mind.test;
 
     {
         immutable input = "_";

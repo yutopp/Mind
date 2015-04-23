@@ -6,11 +6,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module directives.aux;
+module mind.directives.aux;
 
-import operators.sequence, operators.alternative, operators.repeat;
-import parsers.charactor;
-import directives.omit;
+import mind.operators;
+import mind.parsers.charactor;
+import mind.directives.omit;
 
 
 // ================================================================================

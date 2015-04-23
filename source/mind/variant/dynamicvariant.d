@@ -6,11 +6,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module variant.dynamicvariant;
+module mind.variant.dynamicvariant;
 
 import std.typetuple;
 import std.traits : isInstanceOf;
-import variant.any;
+import mind.variant.any;
 
 
 //

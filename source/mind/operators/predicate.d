@@ -6,10 +6,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module operators.predicate;
+module mind.operators.predicate;
 
 import std.range : isInputRange, save;
-import parsers.parser, utility;
+import mind.parsers.parser, mind.utility;
 
 
 // ================================================================================
@@ -36,9 +36,9 @@ template andPred(alias ParserGen)
 
 unittest
 {
-    import test;
-    import parsers.charactor, parsers.aux;
-    import operators.repeat;
+    import mind.test;
+    import mind.parsers.charactor, mind.parsers.aux;
+    import mind.operators.repeat;
 
     {
         alias p = andPred!(ch!'w');
@@ -87,9 +87,9 @@ template notPred(alias ParserGen)
 
 unittest
 {
-    import test;
-    import parsers.charactor, parsers.aux;
-    import operators.repeat;
+    import mind.test;
+    import mind.parsers.charactor, mind.parsers.aux;
+    import mind.operators.repeat;
 
     {
         alias p = notPred!(ch!'w');

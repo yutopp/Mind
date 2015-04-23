@@ -6,10 +6,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module directives.omit;
+module mind.directives.omit;
 
 import std.range : isInputRange;
-import parsers.parser, utility;
+import mind.parsers.parser, mind.utility;
 
 
 // ================================================================================
@@ -39,9 +39,9 @@ template omit(alias ParserGen)
 
 unittest
 {
-    import test;
-    import parsers.charactor;
-    import operators.sequence, operators.repeat;
+    import mind.test;
+    import mind.parsers.charactor;
+    import mind.operators.sequence, mind.operators.repeat;
 
     {
         alias p1 = repeatMore1!(ch!'1');

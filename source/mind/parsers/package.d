@@ -5,11 +5,12 @@
 // (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-module parsers;
 
-public import parsers.parser;
+module mind.parsers;
 
-public import parsers.charactor;
-public import parsers.string;
-public import parsers.nonterminal;
-public import parsers.aux;
+public import mind.parsers.parser;
+
+public import mind.parsers.charactor;
+public import mind.parsers.string;
+public import mind.parsers.nonterminal;
+public import mind.parsers.aux;

@@ -6,11 +6,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module parsers.aux;
+module mind.parsers.aux;
 
 import std.typecons : staticMap;
 import std.range;
-import parsers.parser, utility;
+import mind.parsers.parser, mind.utility;
 
 
 // ================================================================================

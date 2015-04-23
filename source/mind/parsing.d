@@ -6,7 +6,9 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-import utility;
+module mind.parsing;
+
+import mind.utility;
 
 
 struct ParseResult(Attr)

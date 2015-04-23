@@ -6,11 +6,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module operators.option;
+module mind.operators.option;
 
-import parsers.parser, utility;
-import operators.alternative;
-import parsers.aux : eps;
+import mind.parsers.parser, mind.utility;
+import mind.operators.alternative;
+import mind.parsers.aux : eps;
 
 
 // ================================================================================
@@ -25,9 +25,9 @@ template option(alias ParserGen)
 
 unittest
 {
-    import test;
+    import mind.test;
     import std.typecons : Nullable;
-    import parsers.charactor;
+    import mind.parsers.charactor;
 
     {
         immutable input = "www";

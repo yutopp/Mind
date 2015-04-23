@@ -6,9 +6,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
+module mind.grammar;
+
 import std.typecons : Unqual;
 import std.range : isInputRange;
-import parsers.parser, utility;
+import mind.parsers.parser, mind.utility;
 
 
 // ================================================================================

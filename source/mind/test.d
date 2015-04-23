@@ -6,7 +6,9 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-public import parsing;
+module mind.test;
+
+public import mind.parsing;
 
 
 bool passTest(alias V, T)(ParseResult!(T) actual) {

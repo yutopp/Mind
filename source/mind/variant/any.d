@@ -6,8 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module variant.any;
-import std.stdio;
+module mind.variant.any;
 
 
 // Please do not use this class directly when you are in CTFE world(some error checkings are excluded...)

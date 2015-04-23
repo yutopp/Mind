@@ -6,12 +6,12 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module operators.sequence;
+module mind.operators.sequence;
 
 import std.traits, std.range;
 import std.typecons, std.typetuple;
 
-import parsers.parser, utility;
+import mind.parsers.parser, mind.utility;
 
 
 // ================================================================================
@@ -199,10 +199,9 @@ template seq2Merge(alias ParserGenL, alias ParserGenR)
 
 unittest
 {
-    import std.stdio;
-    import test;
-    import parsers.charactor, parsers.aux;
-    import operators.repeat;
+    import mind.test;
+    import mind.parsers.charactor, mind.parsers.aux;
+    import mind.operators.repeat;
 
     pragma(msg, "=== Sequence Merge ===============================================");
 
@@ -601,10 +600,9 @@ template seq2Simple(alias ParserGenL, alias ParserGenR)
 
 unittest
 {
-    import std.stdio;
-    import test;
-    import parsers.charactor, parsers.aux;
-    import operators.repeat;
+    import mind.test;
+    import mind.parsers.charactor, mind.parsers.aux;
+    import mind.operators.repeat;
 
     pragma(msg, "=== Sequence Simple===============================================");
 

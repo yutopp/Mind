@@ -6,13 +6,13 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module operators.alternative;
+module mind.operators.alternative;
 
 import std.typecons, std.typetuple;
 import std.range;
 
-import parsers.parser, utility;
-import variant.dynamicvariant;
+import mind.parsers.parser, mind.utility;
+import mind.variant.dynamicvariant;
 
 
 // ================================================================================
@@ -128,9 +128,9 @@ private enum Mode
 unittest
 {
     //import std.stdio;
-    import test;
-    import parsers.charactor, parsers.aux;
-    import operators.repeat;
+    import mind.test;
+    import mind.parsers.charactor, mind.parsers.aux;
+    import mind.operators.repeat;
 
     {
         immutable input = "111";

@@ -6,10 +6,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module operators.repeat;
+module mind.operators.repeat;
 
 import std.range;
-import parsers.parser, utility;
+import mind.parsers.parser, mind.utility;
 
 
 // ================================================================================

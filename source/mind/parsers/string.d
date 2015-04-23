@@ -6,11 +6,11 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module parsers.string;
+module mind.parsers.string;
 
 import std.typecons : staticMap;
 import std.range;
-import parsers.parser, utility;
+import mind.parsers.parser, mind.utility;
 import std.string;
 
 // ================================================================================
@@ -55,7 +55,7 @@ template str(alias String, CharType = dchar)
 
 unittest
 {
-    import test;
+    import mind.test;
 
     {
         immutable input = "turamiturami";

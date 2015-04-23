@@ -1,4 +1,12 @@
-module parsers.parser;
+//
+// Copyright yutopp 2015 - .
+//
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+//
+
+module mind.parsers.parser;
 
 
 mixin template parser(AttrType)
@@ -32,7 +40,7 @@ mixin template parser(AttrType)
     static bool parseToContainer(R, Context, Attr)
         (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
     {
-        import utility;
+        import mind.utility;
 
         return parseIntoContainer!(typeof(this))(src, ctx, attr);
     }
@@ -45,7 +53,7 @@ mixin template parser(AttrType)
     auto opBinary(string op, P)(P lhs) inout if ( op == ">>" )
     {
         import std.typecons : Unqual;
-        import operators.sequence;
+        import mind.operators.sequence;
 
         return sequence!(Unqual!(typeof(this)), Unqual!(typeof(lhs)))();
     }
@@ -55,7 +63,7 @@ mixin template parser(AttrType)
     auto opBinary(string op, P)(P lhs) inout if ( op == "^" )
     {
         import std.typecons : Unqual;
-        import operators.sequence;
+        import mind.operators.sequence;
 
         return sequenceSimple!(Unqual!(typeof(this)), Unqual!(typeof(lhs)))();
     }
@@ -66,7 +74,7 @@ mixin template parser(AttrType)
     auto opBinary(string op, P)(P p) inout if ( op == "/" )
     {
         import std.typecons : Unqual;
-        import operators.alternative;
+        import mind.operators.alternative;
 
         return alternative!(Unqual!(typeof(this)), Unqual!(typeof(p)))();
     }
@@ -77,7 +85,7 @@ mixin template parser(AttrType)
     auto opUnary(string op)() inout if ( op == "*" )
     {
         import std.typecons : Unqual;
-        import operators.repeat;
+        import mind.operators.repeat;
 
         return repeatMore0!(Unqual!(typeof(this)))();
     }
@@ -87,7 +95,7 @@ mixin template parser(AttrType)
     auto opUnary(string op)() inout if ( op == "+" )
     {
         import std.typecons : Unqual;
-        import operators.repeat;
+        import mind.operators.repeat;
 
         return repeatMore1!(Unqual!(typeof(this)))();
     }
@@ -97,7 +105,7 @@ mixin template parser(AttrType)
     auto opUnary(string op)() inout if ( op == "-" )
     {
         import std.typecons : Unqual;
-        import operators.option;
+        import mind.operators.option;
 
         return option!(Unqual!(typeof(this)))();
     }
@@ -107,7 +115,7 @@ mixin template parser(AttrType)
     auto opUnary(string op)() inout if ( op == "~" )
     {
         import std.typecons : Unqual;
-        import operators.predicate;
+        import mind.operators.predicate;
 
         return notPred!(Unqual!(typeof(this)))();
     }
@@ -116,12 +124,11 @@ mixin template parser(AttrType)
 unittest
 {
 
-    import test;
-    import parsers;
+    import mind.test;
+    import mind.parsers;
+    import std.typecons : Tuple, tuple;
 
     {
-        import std.typecons : Tuple, tuple;
-
         enum input = "abc";
         enum expect = tuple('a', 'b', 'c');
 
@@ -134,8 +141,6 @@ unittest
     }
 
     {
-        import std.typecons : Tuple, tuple;
-
         enum input = "abc";
         enum expect = ['a', 'b', 'c'];
 

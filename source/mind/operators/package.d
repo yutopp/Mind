@@ -6,10 +6,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-module operators;
+module mind.operators;
 
-public import operators.sequence;
-public import operators.alternative;
-public import operators.repeat;
-public import operators.predicate;
-public import operators.option;
+public import mind.operators.sequence;
+public import mind.operators.alternative;
+public import mind.operators.repeat;
+public import mind.operators.predicate;
+public import mind.operators.option;
