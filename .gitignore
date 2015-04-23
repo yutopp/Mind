@@ -6,6 +6,5 @@ __dummy.html
 
 __test__library__
 dub.selections.json
-mind
 
-source/bootstrap.d
+samples
