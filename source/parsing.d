@@ -16,17 +16,18 @@ struct ParseResult(Attr)
 }
 
 //
-auto parse(alias Parser, R)(R input)
+auto parse(alias ParserGen, R)(R input)
 {
-    //pragma(msg, typeof(Parser));
+    alias Parser = toParser!ParserGen;
     alias Attr = GetValueType!Parser;
 
     return parseImpl!(Parser, Attr)(input);
 }
 
 //
-auto onlyParse(alias Parser, R)(R input)
+auto onlyParse(alias ParserGen, R)(R input)
 {
+    alias Parser = toParser!ParserGen;
     alias Attr = Unused;
 
     return parseImpl!(Parser, Attr)(input);
@@ -34,11 +35,16 @@ auto onlyParse(alias Parser, R)(R input)
 
 
 private auto parseImpl(alias Parser, Attr, R)(R input) {
-    int c;  // TEMP: int as Context
+    struct Context {
+    }
+    Context c;
 
     ParseResult!Attr res;
 
-    immutable b = Parser.parse!(R)(input, c, res.attr);
+    //pragma(msg, "parseImpl");
+    //pragma(msg, typeof(res.attr));
+
+    immutable b = Parser.parse!(R, Context, Attr)(input, c, res.attr);
     res.successful = b;
 
     return res;

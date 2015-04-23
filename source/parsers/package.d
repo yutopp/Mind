@@ -7,6 +7,8 @@
 //
 module parsers;
 
+public import parsers.parser;
+
 public import parsers.charactor;
 public import parsers.string;
 public import parsers.nonterminal;

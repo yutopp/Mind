@@ -9,17 +9,19 @@
 module operators.predicate;
 
 import std.range : isInputRange, save;
-import utility;
+import parsers.parser, utility;
 
 
 // ================================================================================
 //
 // ================================================================================
-template andPred(alias Parser)
+template andPred(alias ParserGen)
 {
+    alias Parser = toParser!ParserGen;
+
     struct andPred
     {
-        alias ValueType = Unused;
+        mixin parser!Unused;
 
         static bool parse(R, Context, Attr)
             (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
@@ -59,11 +61,13 @@ unittest
 // ================================================================================
 //
 // ================================================================================
-template notPred(alias Parser)
+template notPred(alias ParserGen)
 {
-    struct notPred
+    alias Parser = toParser!ParserGen;
+
+    struct notPredType
     {
-        alias ValueType = Unused;
+        mixin parser!Unused;
 
         static bool parse(R, Context, Attr)
             (ref R src, ref Context ctx, ref Attr attr) if ( isInputRange!R )
@@ -73,6 +77,11 @@ template notPred(alias Parser)
 
             return !Parser.parse!(R, Context, Attr)(src, ctx, attr);
         }
+    }
+
+    auto notPred()
+    {
+        return notPredType();
     }
 }
 

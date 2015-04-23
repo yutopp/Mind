@@ -40,7 +40,7 @@ struct Any
         }
 
         if ( !__ctfe ) {    // workaround...
-            if ( id != s.id ) { // only runtime...
+            if ( type != s.type ) { // only runtime...
                 return false;
             }
         }
@@ -51,17 +51,19 @@ struct Any
     auto ref peek(T)() inout {
         assert( isValid );
         if ( !__ctfe ) {    // workaround...
-            assert(id == typeid(inout(T)));
+            assert(type == typeid(inout(T)));
         }
 
         return *cast(inout(T)*)value_holder_.getAddressOfValue();
     }
 
-    auto ref id() inout @property {
+    @property auto ref type() const
+    {
         return value_holder_.getTypeid;
     }
 
-    bool isValid() const @property {
+    @property bool isValid() const
+    {
         return !( value_holder_ is null );
     }
 

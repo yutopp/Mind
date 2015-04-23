@@ -33,7 +33,7 @@ template omit(alias ParserGen)
 
     auto omit()
     {
-        return immutable omitType();
+        return omitType();
     }
 }
 

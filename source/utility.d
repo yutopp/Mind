@@ -37,15 +37,18 @@ template isNotUnused(O) {
 }
 
 
-template parseIntoContainer(alias Parser, R, Context, Attr) {
+template parseIntoContainer(alias Parser, R, Context, Attr)
+{
     import std.range;
     static assert(isForwardRange!R);
 
     //static if ( isContainer... ) {
-    bool parseIntoContainer(ref R src, Context ctx, ref Attr attr) {
+    bool parseIntoContainer(ref R src, ref Context ctx, ref Attr attr)
+    {
         static if ( !is(Attr == Unused) ) {
             alias ValueElementType = Parser.ValueType;
             ValueElementType element_attr;
+
         } else {
             alias ValueElementType = Unused;
             alias element_attr = attr;
@@ -63,6 +66,7 @@ template parseIntoContainer(alias Parser, R, Context, Attr) {
     // }
 }
 
+
 template toParserUnit(alias ParserGen)
 {
     import std.traits;
@@ -71,18 +75,20 @@ template toParserUnit(alias ParserGen)
     static if ( isCallable!ParserGen ) {
         // all parsers in Mind is aliased as function
         // , so extract ParserType from the function signature.
-        alias toParserUnit = Unqual!(ReturnType!ParserGen);
+        alias ParserType = Unqual!(ReturnType!ParserGen);
 
     } else static if ( __traits(compiles, typeof(ParserGen)) ) {
-        alias toParserUnit = Unqual!(typeof(ParserGen));
+        alias ParserType = Unqual!(typeof(ParserGen));
 
     } else {
-        alias toParserUnit = Unqual!ParserGen;
+        alias ParserType = Unqual!ParserGen;
     }
+
+    alias toParserUnit = ParserType;
 }
 alias toParser = toParserUnit;
 
-template toParser(ParserGen...)
+template toParser(ParserGen...) if ( ParserGen.length > 1 )
 {
     import std.typetuple : staticMap;
 

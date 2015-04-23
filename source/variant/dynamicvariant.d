@@ -9,7 +9,9 @@
 module variant.dynamicvariant;
 
 import std.typetuple;
+import std.traits : isInstanceOf;
 import variant.any;
+
 
 //
 // Variant interface like Boost.Variant in Boost Libraries.
@@ -17,7 +19,8 @@ import variant.any;
 // This Variant will be useful until std.variant supports CTFE...
 // !!! * PROTO TYPE * !!!
 //
-struct DynamicVariant(Types...) {
+struct DynamicVariant(Types...)
+{
     alias ElementTypes = Types;
 
     this(T)(T v)
@@ -47,13 +50,32 @@ struct DynamicVariant(Types...) {
         return any_ == s.any_;
     }
 
-    auto ref peek(T)() inout if ( staticIndexOf!(T, Types) != -1 ) {
+    auto type() const
+    {
+        if ( !hasValue ) return null;
+
+        return any_.type;
+    }
+
+    bool isSameType(T)() const
+    {
+        if ( !hasValue ) return false;
+
+        return staticIndexOf!(T, Types) == index_;
+    }
+
+    @property bool hasValue() const pure nothrow
+    {
+        return index_ != -1;
+    }
+
+    @property auto ref peek(T)() inout if ( staticIndexOf!(T, Types) != -1 ) {
         version( Debug ) {
             assert(any_.isValid());
             assert(index_ != -1);
         }
 
-        if ( index_ == -1 ) {
+        if ( !hasValue ) {
             assert(false);
         }
 
@@ -63,6 +85,11 @@ struct DynamicVariant(Types...) {
 private:
     Any any_;
     int index_ = -1;
+}
+
+template compareTypeInVariant(alias V, T) if ( isInstanceOf!(DynamicVariant, typeof(V)) )
+{
+    enum compareTypeInVariant = V.isSameType!(T);
 }
 
 
